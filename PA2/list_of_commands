@@ -1,0 +1,4 @@
+####Helpful commands
+
+//** To monitor program with Valgrind **//
+$valgrind ./pa2main text1.txt text2.txt ... ... textN.txt results.txt
