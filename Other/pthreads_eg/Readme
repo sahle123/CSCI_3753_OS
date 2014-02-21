@@ -1,0 +1,7 @@
+There are two programs that demonstrate the use of various pthread
+commands. 
+
+To compile a file, run make or use the following command
+
+   gcc -o object_filename filename -lpthread
+
