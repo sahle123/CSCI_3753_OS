@@ -21,6 +21,19 @@
 
 int main(int argc, char* argv[])
 {
+
+  queue request_queue;                // The queue
+  int mutex_error;                    // For creating mutex and catching errors
+  pthread_mutex_t queue_mutex;        // mutex queue 
+  pthread_mutex_t output_file_mutex;  // output file for mutex
+
+  // Initiailize queue and check for errors
+  if(queue_init(&request_queue, QUEUEMAXSUZE) == QUEUE_FAILURE)
+    fprintf(stderr, "ERROR in queue_init\n");
+
+  // Mutex for the request queue and output file.
+  mutex_error = pthread_mutex_init(&queue_mutex, NULL);
+
   return 0;
 }
 //----------------------------------------------------------------------------
