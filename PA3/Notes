@@ -1,0 +1,24 @@
+Notes:
+
+
+1.) To use testscript: "sudo ./testscript" 
+		- Stores all values in test_ouput folder
+		- To clean folder "make testclean"
+		- All objects and executables will be cleaned
+
+2.) All programs have 3 parameters: 
+		argv[1] = policy
+		argv[2] = number of processes
+		argv[3] = show results (default No)
+
+3.) pi-sched.c is the CPU bound program.
+		- To run, "sudo ./pi-sched <schedule> <process limit> <results?>"
+
+4.) rw.c is the I/O-bound program.
+		- When rw has finished running, make sure to call "make clean" to remove
+		all the excess output files.
+		- To run, "sudo ./rw <schedule> <process limit> <results?>"
+
+5.) mixed.c is the CPU and I/O bound program.
+		- Same as rw, need to call "make clean" after done.
+		- To run, "sudo ./mixed <schedule> <process limit> <results?>"

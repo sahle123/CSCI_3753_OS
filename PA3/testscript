@@ -1,0 +1,49 @@
+#/!/bin/bash
+
+#Description:
+#	A simple bash script to run each each test case
+#	and gather the relevent data.
+
+# Real time = %e, Time spent in kernel mode = %S, Time spent in user mode = %U
+# Percentage of CPU used = %P, Involuntary context switches = %c, Voluntary context switches = %w
+
+TIMEFORMAT="wall=%e user=%U system=%S CPU=%P i-switched=%c v-switched=%w"
+MAKE="make -s"
+
+echo Building code...
+$MAKE clean
+$MAKE
+
+#Run test with three different amounts of processes (10, 50, 100).
+TESTITR="LOW MEDIUM HIGH"
+#Run these processes with different schedulars. 
+TESTSCHED="OTHER FIFO RR"
+#Run these schedulars in different programs. 
+TESTPROG="pi-sched rw"
+
+#Make a test_output directory if it does not already exist. 
+mkdir -m 777 -p test_output
+
+echo Starting test runs...
+
+for prog in $TESTPROG
+do
+	echo
+	echo "$prog" tests...
+	echo
+	for sched in $TESTSCHED
+	do
+		for itr in $TESTITR
+		do
+			#To change the number of test done increase or decrease "1 2 3 4 5"
+			for i in 1 2 3 4 5 
+			do
+				echo Running "$prog" with SCHED_"$sched" and "$itr" simultaneous processes...
+				/usr/bin/time -f "$TIMEFORMAT" -o test_output/"$prog"_"$sched"_"$itr" -a ./$prog SCHED_$sched $itr > /dev/null
+			done
+		done
+	done
+done
+echo
+
+$MAKE clean

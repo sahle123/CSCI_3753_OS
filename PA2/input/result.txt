@@ -1,102 +1,102 @@
-msn.com,65.55.206.228
-blogspot.com,74.125.142.191
-facebook.com,173.252.110.27
-wikipedia.org,208.80.154.224
-qq.com,125.39.240.113
-live.com,65.55.206.154
-baidu.com,220.181.111.85
-microsoft.com,64.4.11.37
-yahoo.com,206.190.36.45
-youtube.com,74.125.142.91
-bing.com,204.79.197.200
-adobe.com,192.150.16.117
-taobao.com,110.75.20.163
-twitter.com,199.59.148.10
-163.com,123.58.180.8
-soso.com,183.61.32.183
-wmfo.org,23.92.21.128
-andysayler.com,198.199.109.206
-amazon.com,72.21.215.232
-wordpress.com,192.0.82.252
-mozilla.com,63.245.217.194
-youku.com,123.126.99.31
-apple.com,17.149.160.49
-yahoo.co.jp,182.22.59.229
-windows.com,65.55.58.201
-hao123.com,180.149.131.31
-xunlei.com,58.251.57.175
-fc2.com,54.241.184.224
-56.com,59.32.213.232
-paypal.com,66.211.169.66
-sina.com.cn,202.108.33.60
-sdjjdsaf.com,
-ebay.com,66.211.160.88
-rakuten.co.jp,202.72.51.22
-ku6.com,122.11.45.243
-tmall.com,110.75.20.163
-ifeng.com,210.51.19.61
-bbc.co.uk,212.58.244.18
-about.com,207.241.148.80
-orkut.com.br,74.125.142.85
-sogou.com,106.120.151.163
-sohu.com,123.125.116.19
-yandex.ru,213.180.193.11
-cnet.com,64.30.224.118
-hotmail.com,157.55.152.112
-go.com,68.71.220.3
-360.cn,220.181.24.100
-myspace.com,216.178.46.224
-paipai.com,58.251.150.244
-alipay.com,110.75.143.33
-softonic.com,46.28.209.20
-craigslist.org,208.82.238.129
-4399.com,115.182.52.231
-orkut.com,74.125.142.87
-soku.com,123.126.99.35
-imageshack.us,208.94.2.7
-nifty.com,210.131.4.217
-goo.ne.jp,218.213.142.230
-skype.com,91.190.218.46
-alibaba.com,205.204.96.36
-naver.com,125.209.222.142
-flickr.com,69.147.76.173
-ameblo.jp,180.233.142.129
-weather.com,96.8.83.132
-4shared.com,74.117.178.54
-amazon.co.jp,54.240.252.0
-renren.com,220.181.181.222
-livedoor.jp,125.6.149.67
-linkedin.com,216.52.242.86
-blogger.com,74.125.142.191
-vkontakte.ru,87.240.156.162
-dailymotion.com,195.8.215.138
-imdb.com,72.21.206.80
-aol.com,64.12.89.186
-daum.net,61.111.62.173
-answers.com,67.196.156.65
-mail.ru,94.100.180.201
-7k7k.com,115.182.59.33
-cnn.com,157.166.226.26
-pps.tv,58.83.190.154
-2345.com,42.62.4.52
-rapidshare.com,154.46.193.3
-tianya.cn,124.225.135.222
-photobucket.com,209.17.80.100
-mediafire.com,205.196.120.13
-seesaa.net,59.106.28.139
-ehow.com,98.124.247.46
-partypoker.com,194.150.36.34
-kugou.com,183.61.119.254
-walmart.com,161.170.248.20
-ebay.de,66.135.215.61
-hp.com,15.216.241.18
-mywebsearch.com,74.113.233.48
-youdao.com,61.135.218.26
-pconline.com.cn,219.136.245.40
-odnoklassniki.ru,217.20.147.94
-qiyi.com,202.108.14.55
-jp.msn.com,202.89.231.47
-ask.com,66.235.120.127
-tudou.com,123.126.98.173
-zynga.com,74.114.13.1
-hotfile.com,199.7.177.216
+windows.com, 65.55.58.201
+sohu.com, 220.181.90.24
+pps.tv, 58.83.190.154
+yahoo.co.jp, 182.22.59.229
+ebay.com, 66.135.205.14
+hao123.com, 123.125.114.224
+wordpress.com, 192.0.82.252
+apple.com, 17.149.160.49
+amazon.com, 176.32.98.166
+tudou.com, 123.126.98.173
+paypal.com, 66.211.169.66
+fc2.com, 54.241.180.47
+facebook.com, 173.252.110.27
+yahoo.com, 98.138.253.109
+youtube.com, 74.125.225.169
+about.com, 207.241.148.80
+live.com, 65.55.206.154
+msn.com, 65.55.206.228
+baidu.com, 220.181.111.85
+wikipedia.org, 208.80.154.224
+microsoft.com, 64.4.11.37
+blogspot.com, 74.125.142.191
+bing.com, 204.79.197.200
+taobao.com, 110.75.20.163
+orkut.com.br, 74.125.142.85
+163.com, 123.58.180.8
+ku6.com, 122.11.45.243
+adobe.com, 192.150.16.117
+twitter.com, 199.59.149.230
+rakuten.co.jp, 202.72.51.22
+56.com, 59.32.213.232
+ask.com, 66.235.120.127
+tmall.com, 110.75.20.163
+wmfo.org, 23.92.21.128
+xunlei.com, 58.251.57.175
+mozilla.com, 63.245.217.194
+sina.com.cn, 202.108.33.60
+yandex.ru, 213.180.193.11
+qq.com, 125.39.240.113
+soso.com, 183.61.32.183
+sdjjdsaf.com, 
+andysayler.com, 198.199.109.206
+cnet.com, 64.30.224.118
+alipay.com, 110.75.143.33
+softonic.com, 46.28.209.20
+nifty.com, 210.131.4.217
+imageshack.us, 208.94.1.8
+4399.com, 115.182.52.231
+myspace.com, 216.178.46.224
+bbc.co.uk, 212.58.246.103
+go.com, 68.71.220.3
+goo.ne.jp, 218.213.142.230
+sogou.com, 106.120.151.162
+hotmail.com, 157.55.152.112
+orkut.com, 74.125.142.87
+craigslist.org, 208.82.238.129
+soku.com, 220.181.185.143
+skype.com, 91.190.216.21
+youku.com, 121.9.204.234
+flickr.com, 69.147.76.173
+weather.com, 96.8.80.132
+naver.com, 202.131.30.12
+cnn.com, 157.166.226.25
+alibaba.com, 205.204.96.36
+blogger.com, 74.125.142.191
+vkontakte.ru, 87.240.156.163
+tianya.cn, 124.225.135.222
+mail.ru, 94.100.180.199
+answers.com, 67.196.156.65
+linkedin.com, 216.52.242.86
+ifeng.com, 210.51.19.61
+amazon.co.jp, 54.240.248.0
+mywebsearch.com, 74.113.233.48
+imdb.com, 207.171.166.22
+zynga.com, 74.114.13.1
+aol.com, 207.200.74.38
+360.cn, 220.181.24.100
+hp.com, 15.192.124.145
+walmart.com, 161.170.248.20
+livedoor.jp, 125.6.149.67
+daum.net, 61.111.62.173
+dailymotion.com, 195.8.215.138
+renren.com, 220.181.181.222
+youdao.com, 61.135.218.26
+ebay.de, 66.135.215.61
+photobucket.com, 209.17.80.100
+mediafire.com, 205.196.120.12
+paipai.com, 112.90.77.176
+ehow.com, 98.124.247.46
+seesaa.net, 59.106.98.139
+qiyi.com, 202.108.14.15
+pconline.com.cn, 219.136.245.40
+odnoklassniki.ru, 217.20.147.94
+jp.msn.com, 207.46.68.62
+4shared.com, 74.117.178.54
+ameblo.jp, 180.233.142.129
+partypoker.com, 83.231.239.70
+kugou.com, 183.61.119.254
+hotfile.com, 199.7.177.216
+7k7k.com, 115.182.59.33
+rapidshare.com, 154.46.193.4
+2345.com, 42.62.4.52
