@@ -7,7 +7,10 @@
 # Real time = %e, Time spent in kernel mode = %S, Time spent in user mode = %U
 # Percentage of CPU used = %P, Involuntary context switches = %c, Voluntary context switches = %w
 
-TIMEFORMAT="wall=%e user=%U system=%S CPU=%P i-switched=%c v-switched=%w"
+#TIMEFORMAT="wall=%e user=%U system=%S CPU=%P i-switched=%c v-switched=%w"
+TEMPLATE="wall \t user \t sys \t CPU \t i-switch \t v-switch"
+TIMEFORMAT="%e \t %U \t %S \t %P \t %c \t %w"
+
 MAKE="make -s"
 
 echo Building code...
@@ -24,6 +27,7 @@ TESTPROG="pi-sched rw mixed"
 #Make a test_output directory if it does not already exist. 
 mkdir -m 777 -p test_output
 
+echo 
 echo Starting test runs...
 
 for prog in $TESTPROG
@@ -35,11 +39,20 @@ do
 	do
 		for itr in $TESTITR
 		do
+			echo -n "" >> test_output/"$prog"_"$sched"_"$itr".txt
+			if [ -s test_output/"$prog"_"$sched"_"$itr".txt ]
+			then
+				echo >> test_output/"$prog"_"$sched"_"$itr".txt
+			else
+				echo "$prog with $sched running $itr" >> test_output/"$prog"_"$sched"_"$itr".txt
+				echo "$TEMPLATE" >> test_output/"$prog"_"$sched"_"$itr".txt
+			fi
+
 			#To change the number of test done increase or decrease "1 2 3 4 5 6 7"
 			for i in 1 2 3 4 5 6 7
 			do
 				echo Running "$prog" with SCHED_"$sched" and "$itr" simultaneous processes...
-				/usr/bin/time -f "$TIMEFORMAT" -o test_output/"$prog"_"$sched"_"$itr" -a ./$prog SCHED_$sched $itr > /dev/null
+				/usr/bin/time -f "$TIMEFORMAT" -o test_output/"$prog"_"$sched"_"$itr".txt -a ./$prog SCHED_$sched $itr > /dev/null
 			done
 		done
 	done
