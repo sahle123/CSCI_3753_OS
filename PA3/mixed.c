@@ -42,7 +42,7 @@
 #define HIGH 100
 
 /* Local Defines for pi-sched */
-#define DEFAULT_ITERATIONS 1000000
+#define DEFAULT_ITERATIONS 5000000
 #define RADIUS (RAND_MAX / 2)
 
 /* Local Defines for rw */

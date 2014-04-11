@@ -41,7 +41,7 @@
 #define MEDIUM 50
 #define HIGH 100
 
-#define DEFAULT_ITERATIONS 1000000
+#define DEFAULT_ITERATIONS 5000000
 #define RADIUS (RAND_MAX / 2)
 
 inline double dist(double x0, double y0, double x1, double y1){
