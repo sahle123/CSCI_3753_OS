@@ -1,0 +1,17 @@
+/*
+*	Useful commands for PA4
+*		4/24/14
+*
+*/
+
+
+###
+Mounting
+###
+	% mount
+
+###
+Unmounting (Need to check...)
+###
+	% fusermount -u <mountdir>
+
