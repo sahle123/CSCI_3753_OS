@@ -76,6 +76,10 @@ Build OpenSSL/AES Examples and Utilities:
 Clean:
  make clean
 
+***pa4-encfs***
+To run program
+	./pa4-encfs <key_phrase> <mirror_directory> <mount_directory>
+
 ***FUSE Examples***
 
 Mount fusehello on new directory

@@ -1,7 +1,6 @@
 /*
 *	Useful commands for PA4
 *		4/24/14
-*
 */
 
 
@@ -15,3 +14,9 @@ Unmounting (Need to check...)
 ###
 	% fusermount -u <mountdir>
 
+
+###
+Run Program
+###
+
+./pa4-encfs <key_phrase> <mirror_directory> <mount_directory>
