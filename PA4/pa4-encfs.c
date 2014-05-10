@@ -15,7 +15,6 @@
 *			specified at mount time.
 *		4.) File system can transparently read and updated unencrypted files
 *		5.) Add proper comments to all of code
-*		6.) OPTIONAL: Refer to handout
 *
 */
 
@@ -122,7 +121,7 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 	int crypt_action = PASS_THROUGH;
 	ssize_t valsize = 0;
 	char fpath[PATH_MAX];
-	char* tmpval = NULL;
+	char* tmpval = 0;
 
 	/* 
 	*	Taken and adapted from: http://linux.about.com/library/cmd/blcmdl2_lstat.htm 
@@ -172,21 +171,21 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 		tmpval = malloc(sizeof(*tmpval)*(valsize));
 		valsize = getxattr(fpath, XATRR_ENCRYPTED_FLAG, tmpval, valsize);
 		
-		fprintf(stderr, "Xattr Value: %s\n", tmpval);
+		fprintf(stderr, "GET_ATTR: Xattr Value: %s\n", tmpval);
 
 		/* If the specified attribute doesn't exist or it's set to false */
-		if (valsize < 0 || memcmp(tmpval, "false", 5) == 0)
+		if (valsize < 0 || memcmp(tmpval, UNENCRYPTED, 5) == 0)
 		{
 			if(errno == ENOATTR)
-				fprintf(stderr, "No %s attribute set\n", XATRR_ENCRYPTED_FLAG);
+				fprintf(stderr, "GET_ATTR: No %s attribute set\n", XATRR_ENCRYPTED_FLAG);
 
-			fprintf(stderr, "file is unencrypted, leaving crypt_action as PASS_THROUGH\n");
+			fprintf(stderr, "GET_ATTR: file is unencrypted, leaving crypt_action as PASS_THROUGH\n");
 		} 
 
 		/* If the attribute exists and is true then we need to get size of decrypted file */
-		else if (memcmp(tmpval, "true", 4) == 0)
+		else if (memcmp(tmpval, ENCRYPTED, 4) == 0)
 		{
-			fprintf(stderr, "file is encrypted, need to decrypt\n");
+			fprintf(stderr, "GET_ATTR: file is encrypted, need to decrypt\n");
 			crypt_action = DECRYPT;
 		}
 
@@ -194,10 +193,10 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 		FILE *tmpFile = fopen(tmpPath, "wb+");
 		FILE *f = fopen(fpath, "rb");
 
-		fprintf(stderr, "fpath: %s\ntmpPath: %s\n", fpath, tmpPath);
+		fprintf(stderr, "GET_ATTR: fpath: %s\nGET_ATTR: tmpPath: %s\n", fpath, tmpPath);
 
 		if(!do_crypt(f, tmpFile, crypt_action, XMP_DATA->key_phrase))
-			fprintf(stderr, "getattr do_crypt failed\n");
+			fprintf(stderr, "GET_ATTR: do_crypt failed\n");
 
 		fclose(f);
 		fclose(tmpFile);
@@ -470,7 +469,7 @@ static int xmp_open(const char *path, struct fuse_file_info *fi)
 
 	xmp_fullpath(fpath, path);
 
-	res = open(path, fi->flags);
+	res = open(fpath, fi->flags);
 	if (res == -1)
 		return -errno;
 
@@ -482,6 +481,7 @@ static int xmp_open(const char *path, struct fuse_file_info *fi)
 static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		    struct fuse_file_info *fi)
 {
+
 	int res;
 	char fpath[PATH_MAX];
 	(void) fi;
@@ -493,44 +493,44 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 
 	xmp_fullpath(fpath, path);
 
+	/* Get size of flag value and value itself */
 	valsize = getxattr(fpath, XATRR_ENCRYPTED_FLAG, NULL, 0);
 	tmpval = malloc(sizeof(*tmpval)*(valsize));
 	valsize = getxattr(fpath, XATRR_ENCRYPTED_FLAG, tmpval, valsize);
 
-	fprintf(stderr, " Read: xattr value: %s\n", tmpval);
+	fprintf(stderr, "READ: xattr value: %s\n", tmpval);
 
 	/* If the specified attribute doesn't exist or it's set to false */
 	if(valsize < 0 || memcmp(tmpval, "false", 5) == 0)
 	{
 		if(errno == ENOATTR)
-		{
-			fprintf(stderr, "Read: No %s attribute set\n", XATRR_ENCRYPTED_FLAG);
-		}
-		fprintf(stderr, "Read: file is unencrypted, leaving crypt_action as pass-through\n");
+			fprintf(stderr, "READ: No %s attribute set\n", XATRR_ENCRYPTED_FLAG);
+
+		fprintf(stderr, "READ: file is unencrypted, leaving crypt_action as PASS_THROUGH\n");
 	}
+	/* else if the tmpval is set to true, then decrypt */
 	else if (memcmp(tmpval, "true", 4) == 0)
 	{
-		fprintf(stderr, "Read: file is encrypted, need to decrypt\n");
+		fprintf(stderr, "READ: file is encrypted, need to decrypt\n");
 		crypt_action = DECRYPT;
 	}
 
-	/// Comment later
 	tmpPath = tmp_path(fpath, SUFFIXREAD);
 	FILE* tmpFile = fopen(tmpPath, "wb+");
 	FILE* f = fopen(fpath, "rb");
 
-	fprintf(stderr, "Read: fpath: %s\ntmpPath: %s\n", fpath, tmpPath);
+	fprintf(stderr, "READ: fpath: %s\ntmpPath: %s\n", fpath, tmpPath);
 
 	if(!do_crypt(f, tmpFile, crypt_action, XMP_DATA->key_phrase))
 	{
-		fprintf(stderr, "Read: do_crypt failed\n");
+		fprintf(stderr, "READ: do_crypt failed\n");
 	}
 
 	fseek(tmpFile, 0, SEEK_END);
 	size_t tmpFilelen = ftell(tmpFile);
 	fseek(tmpFile, 0, SEEK_SET);
 
-	fprintf(stderr, "Read: size given by read: %zu\nsize of tmpFile: %zu\nsize of offset: %zu\n", size, tmpFilelen, offset);
+	fprintf(stderr, "READ: size given by read: %zu\nsize of tmpFile: %zu\nsize of offset: %zu\n", size, tmpFilelen, offset);
 
 	res = fread(buf, 1, tmpFilelen, tmpFile);
 	if (res == -1)
@@ -542,6 +542,51 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 	free(tmpval);
 
 	return res;
+
+/*
+	char fpath[PATH_MAX];
+	xmp_fullpath(fpath, path);
+
+	//int fd;
+	int res;
+
+	(void) fi;
+	(void) offset;
+
+	char *mtext;
+	size_t msize;
+	int action = PASS_THROUGH;
+	char xattr_value[8];
+	ssize_t xattr_len;
+
+	FILE *inFile, *outFile;
+
+	inFile = fopen(path, "r");
+	if (inFile == NULL)
+		return -errno;
+	// open file from memory - The Heap
+	outFile = open_memstream(&mtext, &msize);
+	if (outFile == NULL)
+		return -errno;
+
+	xattr_len = getxattr(path, XATRR_ENCRYPTED_FLAG, xattr_value, 8);
+	if (xattr_len != -1 && !memcmp(xattr_value, ENCRYPTED, 4))
+		action = DECRYPT;
+
+	do_crypt(inFile, outFile, action, XMP_DATA->key_phrase);
+	fclose(inFile);
+
+	fflush(outFile);
+	fseek(outFile, offset, SEEK_SET);
+	res = fread(buf, 1, size, outFile);
+
+	if (res == -1)
+		res = -errno;
+
+	//close(fd);
+	fclose(outFile);
+	return res;
+	*/
 }
 
 /* Encryption and decryption happens here */
@@ -581,7 +626,7 @@ static int xmp_write(const char *path, const char *buf, size_t size,
 		crypt_action = DECRYPT;
 	}
 
-	fprintf(stderr, "crypt_action is set to %d\n", crypt_action);
+	fprintf(stderr, "WRITE: crypt_action is set to %d\n", crypt_action);
 
 	/* If the file to be written to is encrypted */
 	if (crypt_action == DECRYPT)
@@ -592,34 +637,34 @@ static int xmp_write(const char *path, const char *buf, size_t size,
 		const char *tmpPath = tmp_path(fpath, SUFFIXWRITE);
 		FILE *tmpFile = fopen(tmpPath, "wb+");
 
-		fprintf(stderr, "path of original file %s\n", fpath);
+		fprintf(stderr, "WRITE: path of original file %s\n", fpath);
 
 		fseek(f, 0, SEEK_END);
 		size_t original = ftell(f);
 		fseek(f, 0, SEEK_SET);
-		fprintf(stderr, "Size of original file %zu\n", original);
+		fprintf(stderr, "WRITE: Size of original file %zu\n", original);
 
-		fprintf(stderr, "Decrypting contents of original file to tmpFile for writing\n");
+		fprintf(stderr, "WRITE: Decrypting contents of original file to tmpFile for writing\n");
 		if(!do_crypt(f, tmpFile, DECRYPT, XMP_DATA->key_phrase))
 			fprintf(stderr, "WRITE: do_crypt failed\n");
 
     	fseek(f, 0, SEEK_SET);
 
     	size_t tmpFilelen = ftell(tmpFile);
-    	fprintf(stderr, "Size to be written to tmpFile %zu\n", size);
-    	fprintf(stderr, "size of tmpFile %zu\n", tmpFilelen);
-    	fprintf(stderr, "Writing to tmpFile\n");
+    	fprintf(stderr, "WRITE: Size to be written to tmpFile %zu\n", size);
+    	fprintf(stderr, "WRITE: size of tmpFile %zu\n", tmpFilelen);
+    	fprintf(stderr, "WRITE: Writing to tmpFile\n");
 
     	res = fwrite(buf, 1, size, tmpFile);
     	if (res == -1)
 			res = -errno;
 
 		tmpFilelen = ftell(tmpFile);
-		fprintf(stderr, "Size of tmpFile after write %zu\n", tmpFilelen);
+		fprintf(stderr, "WRITE: Size of tmpFile after write %zu\n", tmpFilelen);
 
 		fseek(tmpFile, 0, SEEK_SET);
 
-		fprintf(stderr, "Encrypting new contents of tmpFile into original file\n");
+		fprintf(stderr, "WRITE: Encrypting new contents of tmpFile into original file\n");
 
 		if(!do_crypt(tmpFile, f, ENCRYPT, XMP_DATA->key_phrase))
 			fprintf(stderr, "WRITE: do_crypt failed\n");
@@ -633,7 +678,7 @@ static int xmp_write(const char *path, const char *buf, size_t size,
 	/* If the file to be written to is unencrypted */
 	else if (crypt_action == PASS_THROUGH)
 	{
-		fprintf(stderr, "File to be written is unencrypted");
+		fprintf(stderr, "WRITE: File to be written is unencrypted");
 
 		fd = open(fpath, O_WRONLY);
 		if (fd == -1)
@@ -665,6 +710,7 @@ static int xmp_statfs(const char *path, struct statvfs *stbuf)
 }
 
 /* Encryption happens here. No decryption */
+/// PROBLEM HERE!!!!!!!!!!!!!!!!!!!!!1
 static int xmp_create(const char* path, mode_t mode, struct fuse_file_info* fi) 
 {
     (void) fi;
@@ -681,22 +727,21 @@ static int xmp_create(const char* path, mode_t mode, struct fuse_file_info* fi)
     *	otherwise the contents of the file would be erased.
     */
 	if(!do_crypt(f, f, ENCRYPT, XMP_DATA->key_phrase))
-		fprintf(stderr, "Create: do_crypt failed\n");
+		fprintf(stderr, "CREATE: do_crypt failed\n");
 
-	fprintf(stderr, "Create: encryption done correctly\n");
+	fprintf(stderr, "CREATE: encryption done correctly\n");
 
 	fclose(f);
 
 	if(setxattr(fpath, XATRR_ENCRYPTED_FLAG, ENCRYPTED, 4, 0))
 	{
-    	fprintf(stderr, "error setting xattr of file %s\n", fpath);
+    	fprintf(stderr, "CREATE: error setting xattr of file %s\n", fpath);
     	return -errno;
    	}
-   	fprintf(stderr, "Create: file xatrr correctly set %s\n", fpath);
+   	fprintf(stderr, "CREATE: file xatrr correctly set %s\n", fpath);
     
 
     return 0;
- 
 }
 
 
